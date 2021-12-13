@@ -1,4 +1,4 @@
-require('impatient')
+pcall(require, 'impatient')
 
 -- Run astronauta before anything else (but after impatient)
 vim.cmd [[runtime plugin/astronauta.vim]]
