@@ -16,7 +16,7 @@ main = xmonad
 myConfig = def
     { terminal              = "x-terminal-emulator"
     , borderWidth           = 5
-    , focusedBorderColor    = "#aa2099"
+    , focusedBorderColor    = "#f7768e"
     }
 
 myXmobarPP :: PP
