@@ -1,6 +1,4 @@
 local nvim_exec = function(txt) vim.api.nvim_exec(txt, false) end
-local nnoremap = vim.keymap.nnoremap
-local inoremap = vim.keymap.inoremap
 
 local function custom_attach(client)
     local resolved_capabilities = client.resolved_capabilities
@@ -14,9 +12,9 @@ local function custom_attach(client)
         ]]
     end
 
-    nnoremap {'<leader>gd', vim.lsp.buf.definition}
-    nnoremap {'K', vim.lsp.buf.hover}
-    inoremap {'<C-s>', vim.lsp.buf.signature_help}
+    vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+    vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help)
 
     if resolved_capabilities.document_formatting then
         nvim_exec [[
@@ -28,7 +26,7 @@ local function custom_attach(client)
     end
 
     if resolved_capabilities.rename then
-        nnoremap {'<leader>rn', vim.lsp.buf.rename}
+        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
     end
 end
 
