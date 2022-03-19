@@ -13,6 +13,10 @@ g.neoformat_javascript_prettier = {
 }
 
 g.neoformat_enabled_typescriptreact = {'eslint_d'}
+g.neoformat_typescriptreact_eslint_d = {
+    exe = './node_modules/.bin/eslint_d',
+    args = {'"%:p"'}
+}
 g.neoformat_typescript_prettier = {
     exe = './node_modules/.bin/prettier',
     args = {'--stdin', '--stdin-filepath', '"%:p"'},
