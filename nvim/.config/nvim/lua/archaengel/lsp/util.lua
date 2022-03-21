@@ -33,4 +33,7 @@ local function custom_attach(client)
     end
 end
 
-return {custom_attach = custom_attach}
+local make_capabilities = vim.lsp.protocol.make_client_capabilities
+local capabilities = require'cmp_nvim_lsp'.update_capabilities(
+                         make_capabilities())
+return {capabilities = capabilities, custom_attach = custom_attach}
