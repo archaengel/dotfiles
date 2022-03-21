@@ -11,9 +11,8 @@ vim.keymap.set('t', '<Esc><Esc>', [[<C-\><C-n>]])
 -- telescope
 vim.keymap.set('n', '<leader>ff',
                function() telescope_builtin.find_files {hidden = true} end)
-vim.keymap.set('n', '<leader>bf', function()
-    return require'archaengel.telescope.custom_pickers'.buffers()
-end)
+vim.keymap.set('n', '<leader>bf',
+               function() return telescope_builtin.buffers() end)
 vim.keymap.set('n', '<leader>fb',
                function() return telescope_builtin.file_browser() end)
 vim.keymap.set('n', '<leader>lg',
@@ -23,10 +22,7 @@ vim.keymap.set('n', '<leader>en', function()
 end)
 
 -- lsp
-vim.keymap.set('n', '<leader>vsd', function()
-    vim.lsp.diagnostic.show_line_diagnostics()
-    vim.lsp.diagnostic.show_line_diagnostics()
-end, {silent = true})
+vim.keymap.set('n', '<leader>vsd', vim.diagnostic.open_float, {silent = true})
 
 -- netrw
 vim.keymap.set('n', '<C-b>', function() vim.cmd [[:Lexplore<CR>]] end)
