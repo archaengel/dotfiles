@@ -1,5 +1,6 @@
 -- TODO(archaengel): Figure out how to suport dev icons in status line
 local gl = require('galaxyline')
+local fileinfo = require 'galaxyline.providers.fileinfo'
 -- local colors = require('galaxyline.theme').default
 local colors = require'tokyonight.colors'.setup {}
 local condition = require('galaxyline.condition')
@@ -69,7 +70,8 @@ gls.left[4] = {
 
 gls.left[5] = {
     FileName = {
-        provider = 'FileName',
+        -- provider = 'FileName',
+        provider = fileinfo.get_current_file_path,
         condition = condition.buffer_not_empty,
         highlight = {colors.magenta, colors.bg_statusline, 'bold'}
     }

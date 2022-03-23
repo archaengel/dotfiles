@@ -1,4 +1,5 @@
 local g = vim.g
+local cmd = vim.cmd
 local telescope_builtin = require 'telescope.builtin'
 
 g.mapleader = ' '
@@ -7,6 +8,15 @@ vim.keymap.set('n', '<leader>pv', ':Ex<CR>')
 
 -- terminal
 vim.keymap.set('t', '<Esc><Esc>', [[<C-\><C-n>]])
+vim.keymap.set('n', '<leader>st', function()
+    cmd [[
+        new
+        wincmd J
+        call nvim_win_set_height(0, 12)
+        set winfixheight
+        term
+    ]]
+end)
 
 -- telescope
 vim.keymap.set('n', '<leader>ff',
