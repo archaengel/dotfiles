@@ -4,6 +4,8 @@ return require('packer').startup {
         use 'neovim/nvim-lspconfig'
         use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
         use {'Olical/conjure', tag = 'v4.12.0'}
+        use({'scalameta/nvim-metals', requires = {"nvim-lua/plenary.nvim"}})
+        use {'unisonweb/unison', branch = 'trunk', rtp = 'editor-support/vim'}
 
         use 'onsails/lspkind-nvim'
         use 'j-hui/fidget.nvim'
@@ -15,8 +17,9 @@ return require('packer').startup {
         use 'saadparwaiz1/cmp_luasnip'
 
         use 'folke/tokyonight.nvim'
-        use 'tpope/vim-commentary'
+        use 'preservim/nerdcommenter'
         use 'norcalli/nvim_utils'
+        use 'windwp/nvim-autopairs'
 
         -- TODO(archaengel): Switch to efm for formatting and more
         use 'sbdchd/neoformat'

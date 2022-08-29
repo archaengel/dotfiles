@@ -10,7 +10,6 @@ api.nvim_exec([[
     augroup Linting
         autocmd!
         autocmd BufWritePre *.js Neoformat
-        autocmd BufWritePre *.ts* Neoformat
         autocmd BufWritePre *.rs Neoformat
         autocmd BufWritePre *.lua Neoformat
     augroup END]], false)
@@ -19,4 +18,23 @@ api.nvim_exec([[
     augroup Indentation
         autocmd!
         autocmd FileType javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2
+        autocmd FileType typescript setlocal shiftwidth=2 softtabstop=2 tabstop=2
+        autocmd FileType typescriptreact setlocal shiftwidth=2 softtabstop=2 tabstop=2
     augroup END]], false)
+
+local lsputil = require 'archaengel.lsp.util'
+local custom_attach = lsputil.custom_attach
+local capabilities = lsputil.capabilities
+
+local metals_config = require'metals'.bare_config()
+metals_config.capabilities = capabilities
+metals_config.on_attach = custom_attach
+
+local group = api.nvim_create_augroup("MetalsLsp", {clear = true})
+api.nvim_create_autocmd("FileType", {
+    pattern = "java,scala,sbt",
+    callback = function()
+        require('metals').initialize_or_attach(metals_config)
+    end,
+    group = group
+})
