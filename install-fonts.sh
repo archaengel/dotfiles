@@ -13,7 +13,6 @@ check_permissions () {
 
 repo=https://github.com/ryanoasis/nerd-fonts/
 ligature_slug=raw/master/patched-fonts/JetBrainsMono/Ligatures/
-Regular/complete/
 
 regular_file=Regular/complete/JetBrains%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
 bold_file=Bold/complete/JetBrains%20Mono%20Bold%20Nerd%20Font%20Complete%20Mono.ttf

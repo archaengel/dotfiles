@@ -27,5 +27,9 @@ lspconfig.clojure_lsp.setup {
     on_attach = custom_attach,
     capabilities = capabilities
 }
+lspconfig.ocamllsp.setup {
+    on_attach = custom_attach,
+    capabilities = capabilities
+}
 require('archaengel.lsp.luaconfig')
 require('archaengel.lsp.kotlin')
