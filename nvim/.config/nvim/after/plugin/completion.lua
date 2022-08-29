@@ -1,5 +1,6 @@
 local cmp = require 'cmp'
 local lspkind = require 'lspkind'
+local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
 
 cmp.setup {
     snippet = {
@@ -15,3 +16,5 @@ cmp.setup {
     sources = cmp.config.sources({{name = 'nvim_lsp'}, {name = 'luasnip'}},
                                  {{name = 'buffer'}})
 }
+
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())

@@ -7,7 +7,10 @@ capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
 lspconfig.ccls.setup {on_attach = custom_attach, capabilities = capabilities}
 lspconfig.hls.setup {on_attach = custom_attach, capabilities = capabilities}
 lspconfig.tsserver.setup {
-    on_attach = custom_attach,
+    on_attach = function(client)
+        custom_attach(client)
+        client.resolved_capabilities.document_formatting = false
+    end,
     capabilities = capabilities
 }
 -- lspconfig.rls.setup {on_attach = custom_attach}
@@ -31,5 +34,7 @@ lspconfig.ocamllsp.setup {
     on_attach = custom_attach,
     capabilities = capabilities
 }
+lspconfig.cssls.setup {on_attach = custom_attach, capabilities = capabilities}
 require('archaengel.lsp.luaconfig')
 require('archaengel.lsp.kotlin')
+require('archaengel.lsp.efm')
