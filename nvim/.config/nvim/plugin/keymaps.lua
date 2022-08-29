@@ -7,7 +7,7 @@ g.mapleader = ' '
 vim.keymap.set('n', '<leader>pv', ':Ex<CR>')
 
 -- terminal
-vim.keymap.set('t', '<Esc><Esc>', [[<C-\><C-n>]])
+vim.keymap.set('t', '<leader><Esc><Esc>', [[<C-\><C-n>]])
 vim.keymap.set('n', '<leader>st', function()
     cmd [[
         new
