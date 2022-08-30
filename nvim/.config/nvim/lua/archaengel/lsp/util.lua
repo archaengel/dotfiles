@@ -1,8 +1,8 @@
 local nvim_exec = function(txt) vim.api.nvim_exec(txt, false) end
 
 local function custom_attach(client)
-    local resolved_capabilities = client.resolved_capabilities
-    if resolved_capabilities.document_highlight then
+    local server_capabilities = client.server_capabilities
+    if server_capabilities.document_highlight then
         nvim_exec [[
             augroup docuemnt_highlight
                 autocmd! * <buffer>
@@ -15,11 +15,14 @@ local function custom_attach(client)
     vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover)
     vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help)
-    vim.keymap.set('n', '<leader>pe', vim.lsp.diagnostic.goto_prev)
-    vim.keymap.set('n', '<leader>ne', vim.lsp.diagnostic.goto_next)
+    vim.keymap.set('n', '<leader>pe', function()
+        vim.diagnostic.goto_prev()
+        vim.diagnostic.open_float()
+    end)
+    vim.keymap.set('n', '<leader>ne', vim.diagnostic.goto_next)
     vim.keymap.set('n', '<leader>aa', vim.lsp.buf.code_action)
 
-    if resolved_capabilities.document_formatting then
+    if server_capabilities.document_formatting then
         nvim_exec [[
             augroup document_formatting
                 autocmd! * <buffer>
@@ -28,13 +31,12 @@ local function custom_attach(client)
         ]]
     end
 
-    if resolved_capabilities.rename then
+    if server_capabilities.rename then
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
     end
 end
 
 local make_capabilities = vim.lsp.protocol.make_client_capabilities
-
 local capabilities = require'cmp_nvim_lsp'.update_capabilities(
                          make_capabilities())
 

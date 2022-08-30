@@ -23,8 +23,7 @@ end
 
 local home = os.getenv('HOME')
 local sumneko_root_path = home .. '/third-party/lua-language-server'
-local sumneko_binary = sumneko_root_path .. '/bin/' .. system_name ..
-                           '/lua-language-server'
+local sumneko_binary = sumneko_root_path .. '/bin/'.. '/lua-language-server'
 
 -- Configure runtime path
 local runtime_path = vim.split(package.path, ';')

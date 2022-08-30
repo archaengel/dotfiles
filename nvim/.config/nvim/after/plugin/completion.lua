@@ -7,6 +7,8 @@ cmp.setup {
         expand = function(args) require'luasnip'.lsp_expand(args.body) end
     },
     mapping = {
+        ['<C-N>'] = cmp.mapping(cmp.mapping.select_next_item()),
+        ['<C-P>'] = cmp.mapping(cmp.mapping.select_prev_item()),
         ['<C-U>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i'}),
         ['<C-D>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i'}),
         ['<CR>'] = cmp.mapping.confirm({select = true}),
