@@ -6,6 +6,27 @@ return require('packer').startup {
         use {'Olical/conjure', tag = 'v4.12.0'}
         use({'scalameta/nvim-metals', requires = {"nvim-lua/plenary.nvim"}})
         use {'unisonweb/unison', branch = 'trunk', rtp = 'editor-support/vim'}
+        use {
+            'lewis6991/gitsigns.nvim',
+            config = function()
+                require'gitsigns'.setup{
+                    on_attach = function(bufnr)
+                        local gs = package.loaded.gitsigns
+                        -- Navigation
+                        vim.keymap.set('n', ']c', function()
+                            if vim.wo.diff then return ']c' end
+                            vim.schedule(function() gs.next_hunk() end)
+                            return '<Ignore>'
+                        end, {expr = true})
+                        vim.keymap.set('n', '[c', function()
+                            if vim.wo.diff then return '[c' end
+                            vim.schedule(function() gs.prev_hunk() end)
+                            return '<Ignore>'
+                        end, {expr = true})
+                    end
+                }
+            end,
+        }
 
         use 'onsails/lspkind-nvim'
         use 'j-hui/fidget.nvim'
