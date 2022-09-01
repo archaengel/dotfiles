@@ -21,7 +21,7 @@ local languages = {
 
 lspconfig.efm.setup {
     capabilities = capabilities,
-    init_options = {documentFormatting = true},
+    init_options = {document_formatting = true},
     on_attach = custom_attach,
     filetypes = vim.tbl_keys(languages),
     settings = {languages = languages}

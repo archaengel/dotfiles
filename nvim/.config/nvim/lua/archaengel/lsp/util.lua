@@ -1,8 +1,9 @@
 local nvim_exec = function(txt) vim.api.nvim_exec(txt, false) end
 
 local function custom_attach(client)
+    P(client.server_capabilities)
     local server_capabilities = client.server_capabilities
-    if server_capabilities.document_highlight then
+    if server_capabilities.documentHighlightProvider then
         nvim_exec [[
             augroup docuemnt_highlight
                 autocmd! * <buffer>
@@ -15,33 +16,30 @@ local function custom_attach(client)
     vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover)
     vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help)
-    vim.keymap.set('n', '<leader>pe', function()
-        vim.diagnostic.goto_prev()
-        vim.diagnostic.open_float()
-    end)
+    vim.keymap.set('n', '<leader>pe', vim.diagnostic.goto_prev)
     vim.keymap.set('n', '<leader>ne', vim.diagnostic.goto_next)
     vim.keymap.set('n', '<leader>aa', vim.lsp.buf.code_action)
 
-    if server_capabilities.document_formatting then
+    if server_capabilities.documentFormattingProvider then
         nvim_exec [[
             augroup document_formatting
                 autocmd! * <buffer>
-                autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+                autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
             augroup END
         ]]
     end
 
-    if server_capabilities.rename then
+    if server_capabilities.renameProvider then
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
     end
 end
 
 local make_capabilities = vim.lsp.protocol.make_client_capabilities
-local capabilities = require'cmp_nvim_lsp'.update_capabilities(
-                         make_capabilities())
+local capabilities = require 'cmp_nvim_lsp'.update_capabilities(
+    make_capabilities())
 
 local make_capabilities_with_cmp = function()
-    return require'cmp_nvim_lsp'.update_capabilities(make_capabilities())
+    return require 'cmp_nvim_lsp'.update_capabilities(make_capabilities())
 end
 
 return {
