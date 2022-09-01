@@ -2,31 +2,20 @@ return require('packer').startup {
     function(use)
         use 'wbthomason/packer.nvim'
         use 'neovim/nvim-lspconfig'
-        use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-        use {'Olical/conjure', tag = 'v4.12.0'}
-        use({'scalameta/nvim-metals', requires = {"nvim-lua/plenary.nvim"}})
-        use {'unisonweb/unison', branch = 'trunk', rtp = 'editor-support/vim'}
+        use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+        use { 'Olical/conjure', tag = 'v4.12.0' }
+        use({ 'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" } })
+        use { 'unisonweb/unison', branch = 'trunk', rtp = 'editor-support/vim' }
+
+        -- debugger
+        use 'mfussenegger/nvim-dap'
+        use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
         use {
-            'lewis6991/gitsigns.nvim',
-            config = function()
-                require'gitsigns'.setup{
-                    on_attach = function(bufnr)
-                        local gs = package.loaded.gitsigns
-                        -- Navigation
-                        vim.keymap.set('n', ']c', function()
-                            if vim.wo.diff then return ']c' end
-                            vim.schedule(function() gs.next_hunk() end)
-                            return '<Ignore>'
-                        end, {expr = true})
-                        vim.keymap.set('n', '[c', function()
-                            if vim.wo.diff then return '[c' end
-                            vim.schedule(function() gs.prev_hunk() end)
-                            return '<Ignore>'
-                        end, {expr = true})
-                    end
-                }
-            end,
+            "microsoft/vscode-js-debug",
+            opt = true,
+            run = "npm install --legacy-peer-deps && npm run compile"
         }
+        use 'lewis6991/gitsigns.nvim'
 
         use 'onsails/lspkind-nvim'
         use 'j-hui/fidget.nvim'
@@ -52,9 +41,9 @@ return require('packer').startup {
         use 'fladson/vim-kitty'
         use {
             'nvim-telescope/telescope.nvim',
-            requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+            requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } }
         }
-        use {'NTBBloodbath/rest.nvim', requires = {'nvim-lua/plenary.nvim'}}
+        use { 'NTBBloodbath/rest.nvim', requires = { 'nvim-lua/plenary.nvim' } }
         use 'nvim-telescope/telescope-fzy-native.nvim'
         use 'nvim-telescope/telescope-symbols.nvim'
         use 'lewis6991/impatient.nvim'
@@ -64,12 +53,12 @@ return require('packer').startup {
             -- your statusline
             config = function() end,
             -- some optional icons
-            requires = {'kyazdani42/nvim-web-devicons', opt = true}
+            requires = { 'kyazdani42/nvim-web-devicons', opt = true }
         }
     end,
     -- Move packer_compiled.lua to lua directory.
     config = {
         compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
-        display = {open_fn = require'packer.util'.float}
+        display = { open_fn = require 'packer.util'.float }
     }
 }
