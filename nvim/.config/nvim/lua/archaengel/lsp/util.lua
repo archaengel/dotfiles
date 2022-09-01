@@ -1,7 +1,6 @@
 local nvim_exec = function(txt) vim.api.nvim_exec(txt, false) end
 
 local function custom_attach(client)
-    P(client.server_capabilities)
     local server_capabilities = client.server_capabilities
     if server_capabilities.documentHighlightProvider then
         nvim_exec [[
