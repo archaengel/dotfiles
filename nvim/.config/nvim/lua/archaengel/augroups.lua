@@ -30,11 +30,11 @@ local metals_config = require'metals'.bare_config()
 metals_config.capabilities = capabilities
 metals_config.on_attach = custom_attach
 
-local group = api.nvim_create_augroup("MetalsLsp", {clear = true})
+local MetalsGroup = api.nvim_create_augroup("MetalsLsp", {clear = true})
 api.nvim_create_autocmd("FileType", {
     pattern = "java,scala,sbt",
     callback = function()
         require('metals').initialize_or_attach(metals_config)
     end,
-    group = group
+    group = MetalsGroup
 })

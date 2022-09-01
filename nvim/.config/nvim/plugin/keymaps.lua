@@ -31,6 +31,8 @@ vim.keymap.set('n', '<leader>en', function()
     telescope_builtin.find_files {cwd = "~/.config/nvim"}
 end)
 
+vim.keymap.set('n', '<leader>rf', function () return telescope_builtin.lsp_references() end)
+
 -- lsp
 vim.keymap.set('n', '<leader>vsd', vim.diagnostic.open_float, {silent = true})
 
