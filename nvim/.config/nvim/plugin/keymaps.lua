@@ -20,24 +20,46 @@ end)
 
 -- telescope
 vim.keymap.set('n', '<leader>ff',
-               function() telescope_builtin.find_files {hidden = true} end)
+    function() telescope_builtin.find_files { hidden = true } end)
 vim.keymap.set('n', '<leader>bf',
-               function() return telescope_builtin.buffers() end)
+    function() return telescope_builtin.buffers() end)
 vim.keymap.set('n', '<leader>fb',
-               function() return telescope_builtin.file_browser() end)
+    function() return telescope_builtin.file_browser() end)
 vim.keymap.set('n', '<leader>lg',
-               function() return telescope_builtin.live_grep() end)
+    function() return telescope_builtin.live_grep() end)
 vim.keymap.set('n', '<leader>en', function()
-    telescope_builtin.find_files {cwd = "~/.config/nvim"}
+    telescope_builtin.find_files { cwd = "~/.config/nvim" }
 end)
 
-vim.keymap.set('n', '<leader>rf', function () return telescope_builtin.lsp_references() end)
+-- harpoon
+local harpoon_ui = require 'harpoon.ui'
+vim.keymap.set('n', '<leader>hm', function()
+    return require 'harpoon.mark'.add_file()
+end)
+vim.keymap.set('n', '<leader>hh', function()
+    return harpoon_ui.toggle_quick_menu()
+end)
+vim.keymap.set('n', '<leader>ha', function()
+    return harpoon_ui.nav_file(1)
+end)
+vim.keymap.set('n', '<leader>hs', function()
+    return harpoon_ui.nav_file(2)
+end)
+vim.keymap.set('n', '<leader>hd', function()
+    return harpoon_ui.nav_file(3)
+end)
+vim.keymap.set('n', '<leader>hf', function()
+    return harpoon_ui.nav_file(4)
+end)
+
+
+vim.keymap.set('n', '<leader>rf', function() return telescope_builtin.lsp_references() end)
 
 -- lsp
-vim.keymap.set('n', '<leader>vsd', vim.diagnostic.open_float, {silent = true})
+vim.keymap.set('n', '<leader>vsd', vim.diagnostic.open_float, { silent = true })
 
 -- netrw
 vim.keymap.set('n', '<C-b>', function() vim.cmd [[:Lexplore<CR>]] end)
 
 -- rest.nvim
-vim.keymap.set('n', '<leader>rq', function() require'rest-nvim'.run() end)
+vim.keymap.set('n', '<leader>rq', function() require 'rest-nvim'.run() end)
