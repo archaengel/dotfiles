@@ -8,21 +8,18 @@ local eslint = {
     lintIgnoreExitCode = true,
     lintStdin = true,
     lintFormats = { "%f(%l,%c): %tarning %m", "%f(%l,%c): %trror %m" },
-    formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
-}
-
--- eslint's formatting is at odds with what's in work repos, so using prettier here until I can nail
--- down the root cause / misconfig
-local prettier = {
+    -- eslint's formatting is at odds with what's in work repos, so using prettier here until I can nail
+    -- down the root cause / misconfig
+    -- formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
     formatCommand = "prettierd ${INPUT}",
     formatStdin = true
 }
 
 local languages = {
-    typescript = { eslint, prettier },
-    typescriptreact = { eslint, prettier },
-    javascript = { eslint, prettier },
-    javascriptreact = { eslint, prettier }
+    typescript = { eslint, eslint },
+    typescriptreact = { eslint, eslint },
+    javascript = { eslint, eslint },
+    javascriptreact = { eslint, eslint }
 }
 
 lspconfig.efm.setup {
