@@ -9,7 +9,7 @@ lspconfig.hls.setup { on_attach = custom_attach, capabilities = capabilities }
 lspconfig.tsserver.setup {
     on_attach = function(client)
         custom_attach(client)
-        client.server_capabilities.document_formatting = false
+        client.server_capabilities.documentFormattingProvider = false
     end,
     capabilities = capabilities
 }

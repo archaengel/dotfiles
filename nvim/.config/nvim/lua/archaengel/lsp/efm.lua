@@ -4,26 +4,31 @@ local lspconfig = require 'lspconfig'
 local capabilities = util.make_capabilities_with_cmp()
 
 local eslint = {
-    lintCommand = "eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}",
+    lintCommand = "eslint_d -f visualstudio --rulesdir script/eslint_rules/build --stdin --stdin-filename ${INPUT}",
     lintIgnoreExitCode = true,
     lintStdin = true,
-    lintFormats = {"%f(%l,%c): %tarning %m", "%f(%l,%c): %trror %m"},
+    lintFormats = { "%f(%l,%c): %tarning %m", "%f(%l,%c): %trror %m" },
     formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+}
+
+-- eslint's formatting is at odds with what's in work repos, so using prettier here until I can nail
+-- down the root cause / misconfig
+local prettier = {
+    formatCommand = "prettierd ${INPUT}",
     formatStdin = true
 }
 
 local languages = {
-    typescript = {eslint, eslint},
-    typescriptreact = {eslint, eslint},
-    javascript = {eslint, eslint},
-    javascriptreact = {eslint, eslint}
+    typescript = { eslint, prettier },
+    typescriptreact = { eslint, prettier },
+    javascript = { eslint, prettier },
+    javascriptreact = { eslint, prettier }
 }
 
 lspconfig.efm.setup {
     capabilities = capabilities,
-    init_options = {document_formatting = true},
+    init_options = { documentFormatting = true },
     on_attach = custom_attach,
     filetypes = vim.tbl_keys(languages),
-    settings = {languages = languages}
+    settings = { languages = languages }
 }
-
