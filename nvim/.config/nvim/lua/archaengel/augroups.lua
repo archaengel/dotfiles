@@ -7,14 +7,6 @@ api.nvim_exec([[
     augroup END]], false)
 
 api.nvim_exec([[
-    augroup Linting
-        autocmd!
-        autocmd BufWritePre *.js Neoformat
-        autocmd BufWritePre *.rs Neoformat
-        autocmd BufWritePre *.lua Neoformat
-    augroup END]], false)
-
-api.nvim_exec([[
     augroup Indentation
         autocmd!
         autocmd FileType javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2

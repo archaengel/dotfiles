@@ -26,6 +26,7 @@ opt.path = "."
 opt.regexpengine = 0
 opt.wrap = false
 opt.laststatus = 3
+opt.winbar = "%#TabLineFill#%f%=%m"
 
 -- Indentation
 cmd [[

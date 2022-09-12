@@ -34,8 +34,6 @@ return require('packer').startup {
         use 'norcalli/nvim_utils'
         use 'windwp/nvim-autopairs'
 
-        -- TODO(archaengel): Switch to efm for formatting and more
-        use 'sbdchd/neoformat'
         -- Was autodetecting netrw windows sh filetype. Let's turn it off for a
         -- bit and see if anything breasks
         -- use 'sheerun/vim-polyglot'
