@@ -25,6 +25,7 @@ return require('packer').startup {
         use 'hrsh7th/cmp-path'
         use 'L3MON4D3/LuaSnip'
         use 'saadparwaiz1/cmp_luasnip'
+        use { "vlelo/arduino-helper.nvim" }
 
         -- harpoon
         use { "ThePrimeagen/harpoon", requires = { "nvim-lua/plenary.nvim" } }
@@ -33,6 +34,7 @@ return require('packer').startup {
         use 'preservim/nerdcommenter'
         use 'norcalli/nvim_utils'
         use 'windwp/nvim-autopairs'
+        use 'kyazdani42/nvim-web-devicons'
 
         -- Was autodetecting netrw windows sh filetype. Let's turn it off for a
         -- bit and see if anything breasks
