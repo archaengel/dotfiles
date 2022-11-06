@@ -4,7 +4,12 @@ local capabilities = lsputil.capabilities
 local lspconfig = require 'lspconfig'
 
 capabilities = require 'cmp_nvim_lsp'.update_capabilities(capabilities)
-lspconfig.ccls.setup { on_attach = custom_attach, capabilities = capabilities }
+lspconfig.ccls.setup {
+    on_attach = function(client)
+        custom_attach(client)
+        client.server_capabilities.documentFormattingProvider = false
+    end,
+    capabilities = capabilities }
 lspconfig.hls.setup { on_attach = custom_attach, capabilities = capabilities }
 lspconfig.tsserver.setup {
     on_attach = function(client)
