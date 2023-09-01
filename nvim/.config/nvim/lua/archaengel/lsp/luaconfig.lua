@@ -12,7 +12,7 @@ end
 
 local home = os.getenv('HOME')
 local sumneko_root_path = home .. '/third-party/lua-language-server'
-local sumneko_binary = sumneko_root_path .. '/bin'.. '/lua-language-server'
+local sumneko_binary = sumneko_root_path .. '/bin/' .. '/lua-language-server'
 
 -- Configure runtime path
 local runtime_path = vim.split(package.path, ';')
@@ -23,10 +23,8 @@ table.insert(runtime_path, "lua/?/init.lua")
 add('$VIMRUNTIME/lua')
 add('$VIMRUNTIME/lua/vim/lsp')
 add('~/.config/nvim')
-add('~/.local/share/nvim/site/pack/packer/opt/*')
-add('~/.local/share/nvim/site/pack/packer/start/*')
-require('lspconfig').sumneko_lua.setup {
-    cmd = {sumneko_binary, '-E', sumneko_root_path .. '/main.lua'},
+require('lspconfig').lua_ls.setup {
+    cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
     capabilities = capabilities,
     on_attach = custom_attach,
     settings = {
@@ -39,7 +37,7 @@ require('lspconfig').sumneko_lua.setup {
             },
             diagnostics = {
                 -- Get the language server to recognize globals
-                globals = {'vim', 'P', 'R', 'RELOAD'}
+                globals = { 'vim', 'P', 'R', 'RELOAD' }
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
@@ -48,7 +46,7 @@ require('lspconfig').sumneko_lua.setup {
                 preloadFileSize = 10000
             },
             -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {enable = false}
+            telemetry = { enable = false }
         }
     }
 }

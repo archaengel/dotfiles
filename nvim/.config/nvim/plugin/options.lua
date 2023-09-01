@@ -26,7 +26,9 @@ opt.path = "."
 opt.regexpengine = 0
 opt.wrap = false
 opt.laststatus = 3
-opt.winbar = "%#TabLineFill#%f%=%m"
+opt.winbar = "%#TabLineFill#%{%v:lua.require'nvim-navic'.get_location()%}%=%m%f"
+-- Disabling for now, causes :Ex to print before opening file
+-- opt.cmdheight = 0
 
 -- Indentation
 cmd [[

@@ -1,6 +1,7 @@
 local nvim_exec = function(txt) vim.api.nvim_exec(txt, false) end
+local navic = require('nvim-navic')
 
-local function custom_attach(client)
+local function custom_attach(client, bufnr)
     local server_capabilities = client.server_capabilities
     if server_capabilities.documentHighlightProvider then
         nvim_exec [[
@@ -28,17 +29,21 @@ local function custom_attach(client)
         ]]
     end
 
+    if server_capabilities.documentSymbolProvider then
+        navic.attach(client, bufnr)
+    end
+
     if server_capabilities.renameProvider then
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
     end
 end
 
 local make_capabilities = vim.lsp.protocol.make_client_capabilities
-local capabilities = require 'cmp_nvim_lsp'.update_capabilities(
+local capabilities = require 'cmp_nvim_lsp'.default_capabilities(
     make_capabilities())
 
 local make_capabilities_with_cmp = function()
-    return require 'cmp_nvim_lsp'.update_capabilities(make_capabilities())
+    return require 'cmp_nvim_lsp'.default_capabilities(make_capabilities())
 end
 
 return {

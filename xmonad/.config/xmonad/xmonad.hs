@@ -5,19 +5,42 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Util.Loggers
+import XMonad.Util.EZConfig (additionalKeysP)
+import XMonad.Actions.Navigation2D (navigation2DP, windowGo, windowSwap)
+import XMonad.Layout.Spacing (spacingWithEdge)
 
 main :: IO ()
 main = xmonad
      . ewmhFullscreen
      . ewmh
      . withEasySB (statusBarProp "xmobar" (pure myXmobarPP)) defToggleStrutsKey
+     $ navigation2DP def
+        ("k", "h", "j", "l")
+        [("M-", windowGo), ("M-S-", windowSwap)]
+        False
      $ myConfig
 
 myConfig = def
     { terminal              = "x-terminal-emulator"
-    , borderWidth           = 5
+    , borderWidth           = 3
     , focusedBorderColor    = "#f7768e"
-    }
+    , layoutHook            = spacingWithEdge 3 $ myLayoutHook
+    } `additionalKeysP` [
+    ( "<Print>", spawn "flameshot gui -c -p ~/Pictures/Screenshots")
+    , ("M-p", spawn "j4-dmenu-desktop --dmenu='dmenu -i'")
+    , ("M-<Esc>", spawn "slock")
+    , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 3%-")
+    , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 3%+")
+    , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
+    , ("<XF86AudioPlay>", spawn "playerctl play-pause")
+    ]
+
+myLayoutHook = tiled ||| Mirror tiled ||| Full
+    where
+        tiled = Tall nmaster delta ratio
+        nmaster = 1
+        ratio = 1/2
+        delta = 3/100
 
 myXmobarPP :: PP
 myXmobarPP = def
