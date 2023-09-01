@@ -1,0 +1,37 @@
+local navic = require('nvim-navic')
+local set_hl = vim.api.nvim_set_hl
+local theme = require('tokyonight.colors').setup()
+
+set_hl(0, "NavicIconsFile", { default = true, fg = theme.fg, bg = theme.none })
+set_hl(0, "NavicIconsModule", { default = true, fg = theme.yellow, bg = theme.none })
+set_hl(0, "NavicIconsNamespace", { default = true, fg = theme.fg, bg = theme.none })
+set_hl(0, "NavicIconsPackage", { default = true, fg = theme.fg, bg = theme.none })
+set_hl(0, "NavicIconsClass", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsMethod", { default = true, fg = theme.blue, bg = theme.none })
+set_hl(0, "NavicIconsProperty", { default = true, fg = theme.green1, bg = theme.none })
+set_hl(0, "NavicIconsField", { default = true, fg = theme.green1, bg = theme.none })
+set_hl(0, "NavicIconsConstructor", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsEnum", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsInterface", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsFunction", { default = true, fg = theme.blue, bg = theme.none })
+set_hl(0, "NavicIconsVariable", { default = true, fg = theme.magenta, bg = theme.none })
+set_hl(0, "NavicIconsConstant", { default = true, fg = theme.magenta, bg = theme.none })
+set_hl(0, "NavicIconsString", { default = true, fg = theme.green, bg = theme.none })
+set_hl(0, "NavicIconsNumber", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsBoolean", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsArray", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsObject", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsKey", { default = true, fg = theme.purple, bg = theme.none })
+set_hl(0, "NavicIconsKeyword", { default = true, fg = theme.purple, bg = theme.none })
+set_hl(0, "NavicIconsNull", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsEnumMember", { default = true, fg = theme.green, bg = theme.none })
+set_hl(0, "NavicIconsStruct", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsEvent", { default = true, fg = theme.orange, bg = theme.none })
+set_hl(0, "NavicIconsOperator", { default = true, fg = theme.fg, bg = theme.none })
+set_hl(0, "NavicIconsTypeParameter", { default = true, fg = theme.green, bg = theme.none })
+set_hl(0, "NavicText", { default = true, fg = theme.fg, bg = theme.none })
+set_hl(0, "NavicSeparator", { default = true, fg = theme.fg, bg = theme.none })
+
+navic.setup {
+    highlight = true,
+}

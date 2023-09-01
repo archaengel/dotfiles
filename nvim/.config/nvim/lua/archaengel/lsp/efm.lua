@@ -15,11 +15,24 @@ local eslint = {
     formatStdin = true
 }
 
+local mypy = {
+    lintCommand = "mypy --show-column-numbers",
+    lintFormats = { "%f:%l:%c: %trror: %m", "%f:%l:%c: %tarning: %m", "%f:%l:%c: %tote: %m" }
+}
+
+local autopep8 = {
+    formatCommand = "autopep8 -",
+    formatStdin = true
+}
+
+
 local languages = {
     typescript = { eslint, eslint },
     typescriptreact = { eslint, eslint },
     javascript = { eslint, eslint },
-    javascriptreact = { eslint, eslint }
+    javascriptreact = { eslint, eslint },
+    graphql = { eslint, eslint },
+    python = { mypy, autopep8 }
 }
 
 lspconfig.efm.setup {

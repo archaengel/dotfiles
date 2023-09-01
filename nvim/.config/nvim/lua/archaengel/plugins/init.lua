@@ -1,67 +1,219 @@
-return require('packer').startup {
-    function(use)
-        use 'wbthomason/packer.nvim'
-        use 'neovim/nvim-lspconfig'
-        use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-        use { 'Olical/conjure', tag = 'v4.12.0' }
-        use({ 'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" } })
-        use { 'unisonweb/unison', branch = 'trunk', rtp = 'editor-support/vim' }
+vim.g.mapleader = ' '
 
-        -- debugger
-        use 'mfussenegger/nvim-dap'
-        use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
-        use {
-            "microsoft/vscode-js-debug",
-            opt = true,
-            run = "npm install --legacy-peer-deps && npm run compile"
-        }
-        use 'lewis6991/gitsigns.nvim'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if vim.uv.fs_stat(lazypath) == nil then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
+end
+vim.opt.rtp:prepend(lazypath)
 
-        use 'onsails/lspkind-nvim'
-        use 'j-hui/fidget.nvim'
-        use 'hrsh7th/nvim-cmp'
-        use 'hrsh7th/cmp-nvim-lsp'
-        use 'hrsh7th/cmp-buffer'
-        use 'hrsh7th/cmp-path'
-        use 'L3MON4D3/LuaSnip'
-        use 'saadparwaiz1/cmp_luasnip'
-        use { "vlelo/arduino-helper.nvim" }
+require('lazy').setup {
+    'neovim/nvim-lspconfig',
+    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+    { 'Olical/conjure', version = 'v4.12.0' },
+    { 'scalameta/nvim-metals', dependencies = { "nvim-lua/plenary.nvim" } },
+    { 'unisonweb/unison', branch = 'trunk',
+        config = function(plugin)
+            vim.opt.rtp:append(plugin.dir .. '/editor-support/vim')
+        end
+    },
 
-        -- harpoon
-        use { "ThePrimeagen/harpoon", requires = { "nvim-lua/plenary.nvim" } }
+    -- terminal
+    {
+        "NvChad/nvterm",
+        keys = {
+            { "<leader>st", function() require('nvterm.terminal').toggle('horizontal') end,
+                desc = "Open horizonal terminal" },
+            { "<leader>rt", function() require('nvterm.terminal').toggle('vertical') end, desc = "Open vertical terminal" },
+            { "<leader>it", function() require('nvterm.terminal').toggle('float') end, desc = "Open float terminal" },
+        },
+        config = function()
+            require('nvterm').setup()
+        end
+    },
 
-        use 'folke/tokyonight.nvim'
-        use 'preservim/nerdcommenter'
-        use 'norcalli/nvim_utils'
-        use 'windwp/nvim-autopairs'
-        use 'kyazdani42/nvim-web-devicons'
+    -- file explorer
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        cmd = "Neotree",
+        version = "2.x",
+        keys = {
+            {
+                "<leader>ft",
+                function()
+                    require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
+                end,
+                desc = "Explorer NeoTree (cwd)",
+            },
+        },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+            "MunifTanjim/nui.nvim",
+        },
+        deactivate = function()
+            vim.cmd([[Neotree close]])
+        end,
+        init = function()
+            vim.g.neo_tree_remove_legacy_commands = 1
+            if vim.fn.argc() == 1 then
+                local stat = vim.uv.fs_stat(vim.fn.argv(0))
+                if stat and stat.type == "directory" then
+                    require("neo-tree")
+                end
+            end
+        end,
+        opts = {
+            sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+            open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
+            filesystem = {
+                bind_to_cwd = false,
+                follow_current_file = true,
+                use_libuv_file_watcher = true,
+            },
+            window = {
+                mappings = {
+                    ["<space>"] = "none",
+                },
+            },
+            default_component_configs = {
+                indent = {
+                    with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+                    expander_collapsed = "",
+                    expander_expanded = "",
+                    expander_highlight = "NeoTreeExpander",
+                },
+                icon = {
+                    folder_empty = "󰜌",
+                    folder_empty_open = "󰜌",
+                },
+                git_status = {
+                    symbols = {
+                        renamed = "󰁕",
+                        unstaged = "󰄱",
+                    },
+                },
+            },
+        },
+        config = function(_, opts)
+            require("neo-tree").setup(opts)
+            vim.api.nvim_create_autocmd("TermClose", {
+                pattern = "*lazygit",
+                callback = function()
+                    if package.loaded["neo-tree.sources.git_status"] then
+                        require("neo-tree.sources.git_status").refresh()
+                    end
+                end,
+            })
+        end,
+    },
 
-        -- Was autodetecting netrw windows sh filetype. Let's turn it off for a
-        -- bit and see if anything breasks
-        -- use 'sheerun/vim-polyglot'
-        use 'kovisoft/paredit'
-        use 'p00f/nvim-ts-rainbow'
-        use 'fladson/vim-kitty'
-        use {
+    -- debugger
+    'mfussenegger/nvim-dap',
+    { "mxsdev/nvim-dap-vscode-js", dependencies = { "mfussenegger/nvim-dap" } },
+    {
+        "microsoft/vscode-js-debug",
+        lazy = true,
+        build = "npm install --legacy-peer-deps && npm run compile"
+    },
+    'lewis6991/gitsigns.nvim',
+
+    'onsails/lspkind-nvim',
+    {
+        'j-hui/fidget.nvim',
+        version = 'legacy',
+    },
+    'hrsh7th/nvim-cmp',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
+    "folke/which-key.nvim",
+
+    {
+        'chipsenkbeil/distant.nvim',
+        branch = 'v0.2',
+        config = function()
+            require('distant').setup {
+                -- Applies Chip's personal settings to every machine you connect to
+                --
+                -- 1. Ensures that distant servers terminate with no connections
+                -- 2. Provides navigation bindings for remote directories
+                -- 3. Provides keybinding to jump into a remote file's parent directory
+                ['*'] = require('distant.settings').chip_default()
+            }
+        end
+    },
+    -- Gh
+    'github/copilot.vim',
+    {
+        'ldelossa/gh.nvim',
+        dependencies = { { 'ldelossa/litee.nvim' } }
+    },
+    {
+        'pwntester/octo.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope.nvim',
-            requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } }
-        }
-        use { 'NTBBloodbath/rest.nvim', requires = { 'nvim-lua/plenary.nvim' } }
-        use 'nvim-telescope/telescope-fzy-native.nvim'
-        use 'nvim-telescope/telescope-symbols.nvim'
-        use 'lewis6991/impatient.nvim'
-        use {
-            'NTBBloodbath/galaxyline.nvim',
-            branch = 'main',
-            -- your statusline
-            config = function() end,
-            -- some optional icons
-            requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-        }
-    end,
-    -- Move packer_compiled.lua to lua directory.
-    config = {
-        compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
-        display = { open_fn = require 'packer.util'.float }
+            'nvim-tree/nvim-web-devicons',
+        },
+        config = function()
+            require "octo".setup()
+        end
+    },
+    { 'nvim-telescope/telescope-ui-select.nvim' },
+    {
+        'ruifm/gitlinker.nvim',
+        dependencies = 'nvim-lua/plenary.nvim',
+    },
+
+    -- Db
+    { 'tpope/vim-dadbod' },
+    { 'kristijanhusak/vim-dadbod-ui' },
+
+    -- harpoon
+    { "ThePrimeagen/harpoon", dependencies = { "nvim-lua/plenary.nvim" } },
+
+    'folke/tokyonight.nvim',
+    'preservim/nerdcommenter',
+    'norcalli/nvim_utils',
+    'windwp/nvim-autopairs',
+
+    'kovisoft/paredit',
+    'p00f/nvim-ts-rainbow',
+    'fladson/vim-kitty',
+    {
+        'nvim-telescope/telescope.nvim',
+        dependencies = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } }
+    },
+    { 'NTBBloodbath/rest.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable 'make' == 1 },
+    'nvim-telescope/telescope-symbols.nvim',
+    'lewis6991/impatient.nvim',
+    { "iamcco/markdown-preview.nvim",
+        build = "cd app && yarn install",
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end,
+        ft = { "markdown" }
+    },
+    {
+        'NTBBloodbath/galaxyline.nvim',
+        branch = 'main',
+        -- your statusline
+        config = function() end,
+        -- some optional icons
+        dependencies = { 'nvim-tree/nvim-web-devicons', lazy = true }
+    },
+    {
+        "SmiteshP/nvim-navic",
+        dependencies = "neovim/nvim-lspconfig"
     }
 }

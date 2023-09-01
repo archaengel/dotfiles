@@ -3,32 +3,44 @@ local cmd = vim.cmd
 local telescope_builtin = require 'telescope.builtin'
 
 g.mapleader = ' '
+g.maplocalleader = ' '
 
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', '<leader>pv', ':Ex<CR>')
+vim.keymap.set('n', '<leader>w', [[<C-w>]])
+vim.keymap.set('n', '<leader>xx', ':so %<CR>')
+-- Deal with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- terminal
-vim.keymap.set('t', '<leader><Esc><Esc>', [[<C-\><C-n>]])
-vim.keymap.set('n', '<leader>st', function()
-    cmd [[
-        new
-        wincmd J
-        call nvim_win_set_height(0, 12)
-        set winfixheight
-        term
-    ]]
-end)
+vim.keymap.set('t', [[<C-x><C-x>]], [[<C-\><C-n>]])
 
 -- telescope
 vim.keymap.set('n', '<leader>ff',
     function() telescope_builtin.find_files { hidden = true } end)
-vim.keymap.set('n', '<leader>bf',
+vim.keymap.set('n', '<leader><Space>',
     function() return telescope_builtin.buffers() end)
 vim.keymap.set('n', '<leader>fb',
     function() return telescope_builtin.file_browser() end)
 vim.keymap.set('n', '<leader>lg',
     function() return telescope_builtin.live_grep() end)
+vim.keymap.set('n', '<leader>lh',
+    function() return telescope_builtin.live_grep { additional_args = function() return { "-." } end } end)
 vim.keymap.set('n', '<leader>en', function()
     telescope_builtin.find_files { cwd = "~/.config/nvim" }
+end)
+vim.keymap.set('n', '<leader>?', function() return telescope_builtin.keymaps() end, { desc = '[?] Search Keymaps' })
+vim.keymap.set('n', '<leader>/',
+    function() return telescope_builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+            winblend = 10,
+            previewer = false,
+        })
+    end, { desc = '[/] Fuzzily search current buffer' })
+vim.keymap.set('n', '<leader>rf', function() return telescope_builtin.lsp_references() end)
+vim.keymap.set('n', '<leader>ds', function() return telescope_builtin.lsp_document_symbols() end)
+vim.keymap.set('n', '<leader>ggs', function()
+    return telescope_builtin.git_status()
 end)
 
 -- harpoon
@@ -38,7 +50,7 @@ vim.keymap.set('n', '<leader>hm', function()
 end)
 vim.keymap.set('n', '<leader>hh', function()
     return harpoon_ui.toggle_quick_menu()
-end)
+end, { desc = '[hh] Toggle Harpoon Quick Menu' })
 vim.keymap.set('n', '<leader>ha', function()
     return harpoon_ui.nav_file(1)
 end)
@@ -52,8 +64,13 @@ vim.keymap.set('n', '<leader>hf', function()
     return harpoon_ui.nav_file(4)
 end)
 
+-- dadbod
+vim.keymap.set('n', '<leader>db', ':DBUIToggle<CR>')
 
-vim.keymap.set('n', '<leader>rf', function() return telescope_builtin.lsp_references() end)
+-- markdown
+-- Markdown plugin isn't checking filetypes correctly so plugging in directly
+-- to the vimscript function instead of <Plug> function
+vim.keymap.set('n', '<leader>pp', ':call mkdp#util#toggle_preview()<CR>')
 
 -- lsp
 vim.keymap.set('n', '<leader>vsd', vim.diagnostic.open_float, { silent = true })

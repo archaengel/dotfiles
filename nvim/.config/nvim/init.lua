@@ -6,5 +6,3 @@ require('archaengel.augroups')
 
 -- Setup treesitter and language server
 require('archaengel.lsp')
-
-vim.cmd [[source ~/.config/nvim/lua/packer_compiled.lua]]

@@ -4,9 +4,9 @@ Config { overrideRedirect = False
        , fgColor  = "#f8f8f2"
        , position = TopW L 100
        , commands = [ Run Weather "EGPF"
-                        [ "--template", "<weather> <tempC>°C"
-                        , "-L", "0"
-                        , "-H", "25"
+                        [ "--template", "<weather> <tempF>°F"
+                        , "-L", "40"
+                        , "-H", "80"
                         , "--low"   , "lightblue"
                         , "--normal", "#f8f8f2"
                         , "--high"  , "red"
@@ -20,9 +20,24 @@ Config { overrideRedirect = False
                     , Run Memory ["--template", "Mem: <usedratio>%"] 10
                     , Run Swap [] 10
                     , Run Date "%a %Y-%m-%d <fc=#8be9fd>%H:%M</fc>" "date" 10
+                    , Run Battery
+                        [ "--template", "<acstatus>"
+                        , "--Low"     , "10"
+                        , "--High"    , "80"
+                        , "--low"     , "red"
+                        , "--normal"  , "orange"
+                        , "--high"    , "green"
+
+                        , "--" -- battery specific options
+                        -- Discharging status
+                        , "-o"  , "<left>% (<timeleft>)"
+                        -- Charging status
+                        , "-O"  , "<fc=#dAA520>Charging</fc>"
+                        , "-i"  ,  "<fc=#eeeeee>Charged</fc>"
+                        ] 50
                     , Run XMonadLog
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "%XMonadLog% }{ %cpu% | %memory% * %swap% | %EGPF% | %date% "
+       , template = "%XMonadLog% }{ %cpu% | %memory% * %swap% | %EGPF% | %date% | %battery%"
        }

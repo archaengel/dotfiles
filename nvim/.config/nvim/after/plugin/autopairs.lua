@@ -1,3 +1,3 @@
 local autopairs = require 'nvim-autopairs'
 
-autopairs.setup {fast_wrap = {}}
+autopairs.setup { fast_wrap = {} }
