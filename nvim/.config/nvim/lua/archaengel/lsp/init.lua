@@ -7,7 +7,9 @@ capabilities = require 'cmp_nvim_lsp'.default_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 lspconfig.ccls.setup { on_attach = custom_attach, capabilities = capabilities }
-lspconfig.hls.setup { on_attach = custom_attach, capabilities = capabilities }
+lspconfig.hls.setup { on_attach = custom_attach, capabilities = capabilities,
+    cmd = { 'haskell-language-server-wrapper', '--lsp'}
+}
 lspconfig.tsserver.setup {
     on_attach = function(client, bufnr)
         custom_attach(client, bufnr)
