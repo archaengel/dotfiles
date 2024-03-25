@@ -23,6 +23,18 @@ require('lazy').setup {
             vim.opt.rtp:append(plugin.dir .. '/editor-support/vim')
         end
     },
+    {
+        -- Unison
+        "unisonweb/unison",
+        branch = "trunk",
+        config = function(plugin)
+            vim.opt.rtp:append(plugin.dir .. "/editor-support/vim")
+            require("lazy.core.loader").packadd(plugin.dir .. "/editor-support/vim")
+        end,
+        init = function(plugin)
+             require("lazy.core.loader").ftdetect(plugin.dir .. "/editor-support/vim")
+        end,
+     },
 
     -- terminal
     {
@@ -127,7 +139,7 @@ require('lazy').setup {
     'onsails/lspkind-nvim',
     {
         'j-hui/fidget.nvim',
-        version = 'legacy',
+        tag = 'legacy',
     },
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
@@ -178,6 +190,23 @@ require('lazy').setup {
     { 'tpope/vim-dadbod' },
     { 'kristijanhusak/vim-dadbod-ui' },
 
+    -- Lean
+    {
+  'Julian/lean.nvim',
+  event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
+
+  dependencies = {
+    'neovim/nvim-lspconfig',
+    'nvim-lua/plenary.nvim',
+    -- you also will likely want nvim-cmp or some completion engine
+  },
+
+  -- see details below for full configuration options
+  opts = {
+    mappings = true,
+  }
+},
+
     -- harpoon
     { "ThePrimeagen/harpoon", dependencies = { "nvim-lua/plenary.nvim" } },
 
@@ -215,5 +244,8 @@ require('lazy').setup {
     {
         "SmiteshP/nvim-navic",
         dependencies = "neovim/nvim-lspconfig"
+    },
+    {
+        "lbrayner/vim-rzip"
     }
 }
