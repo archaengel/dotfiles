@@ -139,7 +139,7 @@ require('lazy').setup {
     'onsails/lspkind-nvim',
     {
         'j-hui/fidget.nvim',
-        version = 'legacy',
+        tag = 'legacy',
     },
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
