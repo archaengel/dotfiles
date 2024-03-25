@@ -1,6 +1,8 @@
 local g = vim.g
 local cmd = vim.cmd
 local telescope_builtin = require 'telescope.builtin'
+local remote_sshfs_api = require 'remote-sshfs.api'
+local remote_connections = require 'remote-sshfs.connections'
 
 g.mapleader = ' '
 g.maplocalleader = ' '
@@ -13,18 +15,35 @@ vim.keymap.set('n', '<leader>xx', ':so %<CR>')
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- remote-sshfs
+vim.keymap.set('n', '<leader>rc', function() return remote_sshfs_api.connect() end)
+vim.keymap.set('n', '<leader>rd', function() return remote_sshfs_api.disconnect() end)
+vim.keymap.set('n', '<leader>re', function() return remote_sshfs_api.edit() end)
+
 -- terminal
 vim.keymap.set('t', [[<C-x><C-x>]], [[<C-\><C-n>]])
 
 -- telescope
 vim.keymap.set('n', '<leader>ff',
-    function() telescope_builtin.find_files { hidden = true } end)
+    function()
+        if remote_connections.is_connected() then
+            return remote_sshfs_api.find_files()
+        end
+
+        return telescope_builtin.find_files { hidden = true }
+    end)
 vim.keymap.set('n', '<leader><Space>',
     function() return telescope_builtin.buffers() end)
 vim.keymap.set('n', '<leader>fb',
     function() return telescope_builtin.file_browser() end)
 vim.keymap.set('n', '<leader>lg',
-    function() return telescope_builtin.live_grep() end)
+    function()
+        if remote_connections.is_connected() then
+            return remote_sshfs_api.live_grep()
+        end
+
+        return telescope_builtin.live_grep()
+    end)
 vim.keymap.set('n', '<leader>lh',
     function() return telescope_builtin.live_grep { additional_args = function() return { "-." } end } end)
 vim.keymap.set('n', '<leader>en', function()
