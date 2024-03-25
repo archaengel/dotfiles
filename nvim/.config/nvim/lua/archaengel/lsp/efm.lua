@@ -25,6 +25,10 @@ local autopep8 = {
     formatStdin = true
 }
 
+local nixfmt = {
+    formatCommand = "nixfmt",
+    formatStdin = true
+}
 
 local languages = {
     typescript = { eslint, eslint },
@@ -32,7 +36,8 @@ local languages = {
     javascript = { eslint, eslint },
     javascriptreact = { eslint, eslint },
     graphql = { eslint, eslint },
-    python = { mypy, autopep8 }
+    python = { mypy, autopep8 },
+    nix = { nixfmt }
 }
 
 lspconfig.efm.setup {
