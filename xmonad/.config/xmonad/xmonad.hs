@@ -8,7 +8,6 @@ import XMonad.Util.Loggers
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Actions.Navigation2D (navigation2DP, windowGo, windowSwap)
 import XMonad.Layout.Spacing (spacingWithEdge)
-import XMonad.Layout.MagicFocus (magicFocus)
 
 main :: IO ()
 main = xmonad
@@ -36,7 +35,7 @@ myConfig = def
     , ("<XF86AudioPlay>", spawn "playerctl play-pause")
     ]
 
-myLayoutHook = magicFocus (tiled ||| Mirror tiled ||| Full)
+myLayoutHook = tiled ||| Mirror tiled ||| Full
     where
         tiled = Tall nmaster delta ratio
         nmaster = 1
