@@ -35,6 +35,9 @@ require('lazy').setup {
              require("lazy.core.loader").ftdetect(plugin.dir .. "/editor-support/vim")
         end,
      },
+    {
+        "folke/zen-mode.nvim",
+    },
 
     -- terminal
     {
