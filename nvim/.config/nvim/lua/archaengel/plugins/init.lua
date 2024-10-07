@@ -243,7 +243,6 @@ require('lazy').setup {
     'windwp/nvim-autopairs',
 
     'kovisoft/paredit',
-    'hiphish/rainbow-delimiters.nvim',
     'fladson/vim-kitty',
     {
         'nvim-telescope/telescope.nvim',
