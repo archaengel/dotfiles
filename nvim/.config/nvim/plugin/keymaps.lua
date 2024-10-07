@@ -18,13 +18,17 @@ vim.keymap.set('t', [[<C-x><C-x>]], [[<C-\><C-n>]])
 
 -- telescope
 vim.keymap.set('n', '<leader>ff',
-    function() telescope_builtin.find_files { hidden = true } end)
+    function()
+        return telescope_builtin.find_files { hidden = true }
+    end)
 vim.keymap.set('n', '<leader><Space>',
     function() return telescope_builtin.buffers() end)
 vim.keymap.set('n', '<leader>fb',
     function() return telescope_builtin.file_browser() end)
 vim.keymap.set('n', '<leader>lg',
-    function() return telescope_builtin.live_grep() end)
+    function()
+        return telescope_builtin.live_grep()
+    end)
 vim.keymap.set('n', '<leader>lh',
     function() return telescope_builtin.live_grep { additional_args = function() return { "-." } end } end)
 vim.keymap.set('n', '<leader>en', function()

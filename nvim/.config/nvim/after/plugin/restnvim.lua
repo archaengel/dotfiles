@@ -1,0 +1,2 @@
+require('rest-nvim').setup {
+}

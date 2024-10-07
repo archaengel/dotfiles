@@ -7,13 +7,16 @@ capabilities = require 'cmp_nvim_lsp'.default_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 lspconfig.ccls.setup { on_attach = custom_attach, capabilities = capabilities }
-lspconfig.hls.setup { on_attach = custom_attach, capabilities = capabilities,
-    cmd = { 'haskell-language-server-wrapper', '--lsp'}
+lspconfig.hls.setup {
+    on_attach = custom_attach,
+    capabilities = capabilities,
+    cmd = { "haskell-language-server-wrapper", "--lsp" },
 }
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
     on_attach = function(client, bufnr)
         custom_attach(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.callHierarchyProvider = true
     end,
     capabilities = capabilities
 }
@@ -44,6 +47,7 @@ lspconfig.graphql.setup {
     capabilities = capabilities,
 }
 lspconfig.gopls.setup { on_attach = custom_attach, capabilities = capabilities }
+lspconfig.nixd.setup { on_attach = custom_attach, capabilities = capabilities }
 require('archaengel.lsp.luaconfig')
 require('archaengel.lsp.kotlin')
 require('archaengel.lsp.efm')

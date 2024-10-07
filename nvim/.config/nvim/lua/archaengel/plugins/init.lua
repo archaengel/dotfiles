@@ -35,6 +35,9 @@ require('lazy').setup {
              require("lazy.core.loader").ftdetect(plugin.dir .. "/editor-support/vim")
         end,
      },
+    {
+        "folke/zen-mode.nvim",
+    },
 
     -- terminal
     {
@@ -139,7 +142,7 @@ require('lazy').setup {
     'onsails/lspkind-nvim',
     {
         'j-hui/fidget.nvim',
-        tag = 'legacy',
+        version = 'v1.4.5',
     },
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
@@ -151,15 +154,19 @@ require('lazy').setup {
 
     {
         'chipsenkbeil/distant.nvim',
-        branch = 'v0.2',
+        branch = 'v0.3',
         config = function()
-            require('distant').setup {
-                -- Applies Chip's personal settings to every machine you connect to
-                --
-                -- 1. Ensures that distant servers terminate with no connections
-                -- 2. Provides navigation bindings for remote directories
-                -- 3. Provides keybinding to jump into a remote file's parent directory
-                ['*'] = require('distant.settings').chip_default()
+            require('distant'):setup {
+                ['network.unix_socket'] = '/run/user/1000/distant/edwardnuno.distant.sock',
+                servers = {
+                    ['*'] = {
+                        connect = {
+                            default = {
+                                options = 'ssh.identity_files=~/.ssh/google_compute_engine,ssh.user_known_hosts_file=~/.ssh/google_compute_known_hosts'
+                            }
+                        }
+                    }
+                }
             }
         end
     },
@@ -216,7 +223,7 @@ require('lazy').setup {
     'windwp/nvim-autopairs',
 
     'kovisoft/paredit',
-    'p00f/nvim-ts-rainbow',
+    'hiphish/rainbow-delimiters.nvim',
     'fladson/vim-kitty',
     {
         'nvim-telescope/telescope.nvim',
