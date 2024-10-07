@@ -12,7 +12,7 @@ lspconfig.hls.setup {
     capabilities = capabilities,
     cmd = { "haskell-language-server-wrapper", "--lsp" },
 }
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
     on_attach = function(client, bufnr)
         custom_attach(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false

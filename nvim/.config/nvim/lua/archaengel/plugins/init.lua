@@ -142,7 +142,7 @@ require('lazy').setup {
     'onsails/lspkind-nvim',
     {
         'j-hui/fidget.nvim',
-        tag = 'legacy',
+        version = 'v1.4.5',
     },
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-nvim-lsp',
@@ -223,7 +223,7 @@ require('lazy').setup {
     'windwp/nvim-autopairs',
 
     'kovisoft/paredit',
-    'p00f/nvim-ts-rainbow',
+    'hiphish/rainbow-delimiters.nvim',
     'fladson/vim-kitty',
     {
         'nvim-telescope/telescope.nvim',
