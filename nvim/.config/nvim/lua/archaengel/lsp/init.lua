@@ -20,6 +20,10 @@ lspconfig.ts_ls.setup {
     end,
     capabilities = capabilities
 }
+lspconfig.unison.setup {
+    on_attach = custom_attach,
+    capabilities = capabilities
+}
 -- lspconfig.rls.setup {on_attach = custom_attach}
 lspconfig.terraformls.setup {
     on_attach = custom_attach,
@@ -51,3 +55,4 @@ lspconfig.nixd.setup { on_attach = custom_attach, capabilities = capabilities }
 require('archaengel.lsp.luaconfig')
 require('archaengel.lsp.kotlin')
 require('archaengel.lsp.efm')
+require('archaengel.lsp.hls')
