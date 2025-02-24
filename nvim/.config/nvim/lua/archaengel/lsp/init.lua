@@ -13,12 +13,16 @@ lspconfig.hls.setup {
     cmd = { "haskell-language-server-wrapper", "--lsp" },
 }
 lspconfig.ts_ls.setup {
+    cmd = { "typescript-language-server", "--stdio", "--log-level", "4" },
     on_attach = function(client, bufnr)
         custom_attach(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.callHierarchyProvider = true
     end,
-    capabilities = capabilities
+    capabilities = capabilities,
+    init_options = {
+        maxTsServerMemory = 8192,
+    }
 }
 lspconfig.unison.setup {
     on_attach = custom_attach,
