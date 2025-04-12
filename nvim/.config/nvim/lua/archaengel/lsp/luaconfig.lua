@@ -10,10 +10,6 @@ local function add(lib)
     end
 end
 
-local home = os.getenv('HOME')
-local sumneko_root_path = home .. '/third-party/lua-language-server'
-local sumneko_binary = sumneko_root_path .. '/bin' .. '/lua-language-server'
-
 -- Configure runtime path
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
@@ -24,7 +20,6 @@ add('$VIMRUNTIME/lua')
 add('$VIMRUNTIME/lua/vim/lsp')
 add('~/.config/nvim')
 require('lspconfig').lua_ls.setup {
-    cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
     capabilities = capabilities,
     on_attach = custom_attach,
     settings = {

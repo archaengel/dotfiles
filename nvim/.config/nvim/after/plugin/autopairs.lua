@@ -1,3 +1,10 @@
-local autopairs = require 'nvim-autopairs'
-
-autopairs.setup { fast_wrap = {} }
+require('lze').load(
+    'nvim-autopairs',
+    {
+        after = function()
+            require('nvim-autopairs').setup {
+                fast_wrap = {}
+            }
+        end,
+    }
+)
