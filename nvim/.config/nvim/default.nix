@@ -65,6 +65,7 @@ let
           haskell-language-server
           typescript-language-server
           terraform-lsp
+          gopls
           nixd
           efm-langserver
           ripgrep
