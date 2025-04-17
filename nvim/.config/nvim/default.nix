@@ -64,7 +64,7 @@ let
         general = with pkgs; [
           haskell-language-server
           typescript-language-server
-          terraform-lsp
+          terraform-ls
           gopls
           nixd
           efm-langserver
