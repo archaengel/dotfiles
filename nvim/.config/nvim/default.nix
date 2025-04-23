@@ -112,6 +112,7 @@ let
           neovimPlugins.nvim-navic
 
           vimPlugins.rest-nvim
+          vimPlugins.cornelis
 
           # cmp
           vimPlugins.nvim-cmp
