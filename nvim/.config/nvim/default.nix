@@ -71,6 +71,8 @@ let
           ripgrep
           fzf
           lua-language-server
+          eslint_d
+          prettier-d-slim
         ];
 
         debug = with pkgs; [
