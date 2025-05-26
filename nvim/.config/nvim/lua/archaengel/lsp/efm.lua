@@ -4,11 +4,14 @@ local lspconfig = require 'lspconfig'
 local capabilities = util.make_capabilities_with_cmp()
 
 local eslint = {
-    lintCommand = "eslint_d -f visualstudio --stdin --stdin-filename ${INPUT}",
+    lintCommand =
+    "eslint_d --debug -c private/testnet-dashboard/web/ui/eslint.config.mjs --stdin --stdin-filename ${INPUT}",
     lintIgnoreExitCode = true,
     lintStdin = true,
+    env = { "ESLINT_D_PPID=" .. vim.fn.getpid(), "ESLINT_D_ROOT=" .. vim.fn.getcwd() },
     lintFormats = { "%f(%l,%c): %tarning %m", "%f(%l,%c): %trror %m" },
-    formatCommand = "eslint_d -f visualstudio --fix-to-stdout --stdin --stdin-filename ${INPUT}",
+    formatCommand =
+    "eslint_d --debug -c private/testnet-dashboard/web/ui/eslint.config.mjs --fix-to-stdout --stdin --stdin-filename ${INPUT}",
     formatStdin = true
 }
 
@@ -38,11 +41,11 @@ local ormolu = {
 }
 
 local languages = {
-    typescript = { eslint, eslint },
-    typescriptreact = { eslint, eslint },
-    javascript = { eslint, eslint },
-    javascriptreact = { eslint, eslint },
-    graphql = { eslint, eslint },
+    typescript = { eslint, prettier },
+    typescriptreact = { eslint, prettier },
+    javascript = { eslint, prettier },
+    javascriptreact = { eslint, prettier },
+    graphql = { eslint, prettier },
     python = { mypy, autopep8 },
     nix = { nixfmt },
     haskell = { ormolu }

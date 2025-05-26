@@ -72,7 +72,7 @@ let
           fzf
           lua-language-server
           eslint_d
-          prettier-d-slim
+          prettierd
         ];
 
         debug = with pkgs; [
