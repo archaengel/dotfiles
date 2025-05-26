@@ -173,7 +173,7 @@ let
         settings = {
           suffix-path = true;
           suffix-LD = true;
-          wrapRc = true;
+          wrapRc = "UNWRAP_NVIM";
           aliases = [ "vim" ];
           neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
         };
