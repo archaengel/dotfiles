@@ -30,6 +30,11 @@ local autopep8 = {
     formatStdin = true
 }
 
+local ruff = {
+    formatCommand = "ruff format --stdin-filename ${INPUT}",
+    formatStdin = true
+}
+
 local nixfmt = {
     formatCommand = "nixfmt",
     formatStdin = true
@@ -46,7 +51,7 @@ local languages = {
     javascript = { eslint, prettier },
     javascriptreact = { eslint, prettier },
     graphql = { eslint, prettier },
-    python = { mypy, autopep8 },
+    python = { mypy, ruff },
     nix = { nixfmt },
     haskell = { ormolu }
 }
