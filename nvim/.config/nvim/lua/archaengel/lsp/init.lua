@@ -46,7 +46,15 @@ lspconfig.graphql.setup {
     on_attach = custom_attach,
     capabilities = capabilities,
 }
-lspconfig.gopls.setup { on_attach = custom_attach, capabilities = capabilities }
+lspconfig.gopls.setup {
+    on_attach = custom_attach,
+    settings = {
+        gopls = {
+            buildFlags = { "-tags=test,testcontainers" }
+        },
+    },
+    capabilities = capabilities
+}
 lspconfig.nixd.setup { on_attach = custom_attach, capabilities = capabilities }
 require('archaengel.lsp.luaconfig')
 require('archaengel.lsp.kotlin')
