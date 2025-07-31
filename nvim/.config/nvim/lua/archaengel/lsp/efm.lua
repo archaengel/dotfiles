@@ -45,6 +45,11 @@ local ormolu = {
     formatStdin = true,
 }
 
+local go = {
+    lintCommand = "staticcheck ${INPUT}",
+    lintFormats = { "%f:%l:%c: %m" }
+}
+
 local languages = {
     typescript = { eslint, prettier },
     typescriptreact = { eslint, prettier },
@@ -53,7 +58,8 @@ local languages = {
     graphql = { eslint, prettier },
     python = { mypy, ruff },
     nix = { nixfmt },
-    haskell = { ormolu }
+    haskell = { ormolu },
+    go = { go }
 }
 
 lspconfig.efm.setup {
