@@ -66,6 +66,7 @@ let
           typescript-language-server
           terraform-ls
           gopls
+          gotools
           nixd
           efm-langserver
           ripgrep
@@ -73,6 +74,7 @@ let
           lua-language-server
           eslint_d
           prettierd
+          python3Packages.jedi-language-server
         ];
 
         debug = with pkgs; [
