@@ -31,3 +31,10 @@ api.nvim_create_autocmd("FileType", {
     command = "setlocal spell spelllang=en_us wrap",
     group = MarkdownGroup
 })
+
+local ContainerfileGroup = api.nvim_create_augroup("ContainerfileSyn", { clear = true })
+api.nvim_create_autocmd({ "BufEnter", "BufRead" }, {
+    pattern = "*.containerfile",
+    command = "set filetype=dockerfile",
+    group = ContainerfileGroup
+})
