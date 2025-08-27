@@ -5,13 +5,13 @@ local capabilities = util.make_capabilities_with_cmp()
 
 local eslint = {
     lintCommand =
-    "eslint_d --debug -c private/testnet-dashboard/web/ui/eslint.config.mjs --stdin --stdin-filename ${INPUT}",
+    "eslint_d -f visualstudio -c web-ui/eslint.config.mjs --stdin --stdin-filename ${INPUT}",
     lintIgnoreExitCode = true,
     lintStdin = true,
-    env = { "ESLINT_D_PPID=" .. vim.fn.getpid(), "ESLINT_D_ROOT=" .. vim.fn.getcwd() },
+    env = { "ESLINT_D_PPID=" .. vim.fn.getpid(), "ESLINT_D_ROOT=" .. vim.fn.getcwd() .. "/web-ui", "ESLINT_USE_FLAT_CONFIG=true" },
     lintFormats = { "%f(%l,%c): %tarning %m", "%f(%l,%c): %trror %m" },
     formatCommand =
-    "eslint_d --debug -c private/testnet-dashboard/web/ui/eslint.config.mjs --fix-to-stdout --stdin --stdin-filename ${INPUT}",
+    "eslint_d -c eslint.config.mjs --fix-to-stdout --stdin --stdin-filename ${INPUT}",
     formatStdin = true
 }
 

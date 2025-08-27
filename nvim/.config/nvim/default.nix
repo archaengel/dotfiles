@@ -75,6 +75,7 @@ let
           eslint_d
           prettierd
           python3Packages.jedi-language-server
+          vscode-langservers-extracted
         ];
 
         debug = with pkgs; [
