@@ -1,6 +1,5 @@
 local util = require 'archaengel.lsp.util'
 local custom_attach = util.custom_attach
-local lspconfig = require 'lspconfig'
 local capabilities = util.make_capabilities_with_cmp()
 
 local eslint = {
@@ -62,10 +61,11 @@ local languages = {
     go = { go }
 }
 
-lspconfig.efm.setup {
+vim.lsp.config('efm', {
     capabilities = capabilities,
     init_options = { documentFormatting = true },
     on_attach = custom_attach,
     filetypes = vim.tbl_keys(languages),
     settings = { languages = languages }
-}
+})
+vim.lsp.enable('efm')

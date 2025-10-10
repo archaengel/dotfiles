@@ -19,7 +19,7 @@ table.insert(runtime_path, "lua/?/init.lua")
 add('$VIMRUNTIME/lua')
 add('$VIMRUNTIME/lua/vim/lsp')
 add('~/.config/nvim')
-require('lspconfig').lua_ls.setup {
+vim.lsp.config('lua_ls', {
     capabilities = capabilities,
     on_attach = custom_attach,
     settings = {
@@ -44,4 +44,5 @@ require('lspconfig').lua_ls.setup {
             telemetry = { enable = false }
         }
     }
-}
+})
+vim.lsp.enable('lua_ls')
