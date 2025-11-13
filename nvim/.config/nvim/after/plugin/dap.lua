@@ -27,3 +27,33 @@ for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "java
         },
     }
 end
+
+require('dap-go').setup {
+    -- :help dap-configuration
+    dap_configurations = {
+        {
+            -- Must be "go" or it will be ignored by the plugin
+            type = "go",
+            name = "Attach remote",
+            mode = "remote",
+            request = "attach",
+        },
+    },
+    -- delve configurations
+    delve = {
+        -- the path to the executable dlv which will be used for debugging.
+        -- by default, this is the "dlv" executable on your PATH.
+        path = "dlv",
+        initialize_timeout_sec = 20,
+        port = "${port}",
+        args = {},
+        build_flags = {},
+        detached = vim.fn.has("win32") == 0,
+        cwd = nil,
+    },
+    -- options related to running closest test
+    tests = {
+        -- enables verbosity when running the test.
+        verbose = false,
+    },
+}
