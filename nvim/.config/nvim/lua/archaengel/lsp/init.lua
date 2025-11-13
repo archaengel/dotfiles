@@ -27,6 +27,11 @@ lspconfig('ts_ls', {
     }
 })
 vim.lsp.enable('ts_ls')
+lspconfig('solidity_ls', {
+    on_attach = custom_attach,
+    capabilities = capabilities
+})
+vim.lsp.enable('solidity_ls')
 lspconfig('unison', {
     on_attach = custom_attach,
     capabilities = capabilities

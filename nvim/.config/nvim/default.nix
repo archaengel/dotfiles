@@ -67,6 +67,7 @@ let
           terraform-ls
           gopls
           gotools
+          vscode-solidity-server
           nixd
           efm-langserver
           ripgrep
@@ -145,7 +146,9 @@ let
 
         debug = with pkgs; [
           vimPlugins.nvim-dap
+          vimPlugins.nvim-dap-view
           neovimPlugins.nvim-dap-vscode-js
+          vimPlugins.nvim-dap-go
         ];
       };
 
