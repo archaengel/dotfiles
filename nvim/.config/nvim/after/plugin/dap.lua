@@ -1,6 +1,11 @@
+local dap = require('dap')
+local ui = require('dap-view')
 require("dap-vscode-js").setup({
     adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
 })
+
+vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpoint', { text = '👉', texthl = '', linehl = '', numhl = '' })
 
 for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
     require("dap").configurations[language] = {
@@ -28,7 +33,8 @@ for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "java
     }
 end
 
-require('dap-go').setup {
+local dapgo = require('dap-go')
+dapgo.setup {
     -- :help dap-configuration
     dap_configurations = {
         {
@@ -57,3 +63,28 @@ require('dap-go').setup {
         verbose = false,
     },
 }
+
+vim.keymap.set("n", "<space>dbb", dap.toggle_breakpoint)
+vim.keymap.set("n", "<space>dg", dap.run_to_cursor)
+
+vim.keymap.set("n", "<space>dc", dap.continue)
+vim.keymap.set("n", "<space>di", dap.step_into)
+vim.keymap.set("n", "<space>dv", dap.step_over)
+vim.keymap.set("n", "<space>do", dap.step_out)
+vim.keymap.set("n", "<space>du", dap.step_back)
+vim.keymap.set("n", "<space>dr", dap.restart)
+vim.keymap.set("n", "<space>dT", dapgo.debug_last_test)
+vim.keymap.set("n", "<space>dt", dapgo.debug_test)
+
+dap.listeners.before.attach.dapui_config = function()
+    ui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+    ui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+    ui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+    ui.close()
+end

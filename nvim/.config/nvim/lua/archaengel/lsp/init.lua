@@ -60,6 +60,11 @@ lspconfig('graphql', {
     on_attach = custom_attach,
     capabilities = capabilities,
 })
+lspconfig('tailwindcss', {
+    on_attach = custom_attach,
+    capabilities = capabilities
+})
+vim.lsp.enable('tailwindcss')
 vim.lsp.enable('graphql')
 lspconfig('gopls', {
     on_attach = custom_attach,

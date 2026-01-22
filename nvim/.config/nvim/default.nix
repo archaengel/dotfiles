@@ -95,7 +95,7 @@ let
           vimPlugins.nvim-web-devicons
           vimPlugins.nvim-lspconfig
           vimPlugins.plenary-nvim
-          vimPlugins.nvim-treesitter.withAllGrammars
+          vimPlugins.nvim-treesitter-legacy.withAllGrammars
           vimPlugins.zen-mode-nvim
           vimPlugins.vimtex
           vimPlugins.which-key-nvim
@@ -127,8 +127,6 @@ let
           vimPlugins.luasnip
           vimPlugins.cmp_luasnip
           vimPlugins.cmp-nvim-lsp
-
-          # TODO: consider copilot
 
           vimPlugins.gitlinker-nvim
           vimPlugins.vim-dadbod
@@ -230,7 +228,7 @@ forEachSystem (
         name = defaultPackageName;
         packages = [ defaultPackage ];
         inputsFrom = [ ];
-        shellHook = '''';
+        shellHook = "";
       };
     };
 
