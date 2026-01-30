@@ -1,4 +1,4 @@
-local nvim_exec = function(txt) vim.api.nvim_exec(txt, false) end
+local nvim_exec = function(txt) vim.api.nvim_exec2(txt, { output = false }) end
 local navic = require('nvim-navic')
 
 local function custom_attach(client, bufnr)
@@ -16,15 +16,25 @@ local function custom_attach(client, bufnr)
     vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover)
     vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help)
-    vim.keymap.set('n', '<leader>pe', vim.diagnostic.goto_prev)
-    vim.keymap.set('n', '<leader>ne', vim.diagnostic.goto_next)
+    vim.keymap.set('n', '<leader>pe', function()
+        vim.diagnostic.jump {
+            count = -1,
+            float = true,
+        }
+    end)
+    vim.keymap.set('n', '<leader>ne', function()
+        vim.diagnostic.jump {
+            count = 1,
+            float = true,
+        }
+    end)
     vim.keymap.set('n', '<leader>aa', vim.lsp.buf.code_action)
 
     if server_capabilities.documentFormattingProvider then
         nvim_exec [[
             augroup document_formatting
                 autocmd! * <buffer>
-                autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
+                autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ async = false })
             augroup END
         ]]
     end

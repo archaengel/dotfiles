@@ -1,15 +1,9 @@
-local colors = require 'tokyonight.colors'.setup {}
-local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
-parser_config.clojure.filetype_to_parsername = 'cljs'
+require 'nvim-treesitter'.setup {}
 
-require 'nvim-treesitter.configs'.setup {
-    rainbow = {
-        enable = true,
-        disable = { 'bash' },
-        colors = {
-            colors.red, colors.orange, colors.yellow, colors.green, colors.blue,
-            colors.purple, colors.magenta
-        }
-    },
-    highlight = { enable = true }
-}
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { '<filetype>' },
+    callback = function()
+        vim.treesitter.start()
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
+})
