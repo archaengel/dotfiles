@@ -95,9 +95,21 @@ let
           vimPlugins.nvim-web-devicons
           vimPlugins.nvim-lspconfig
           vimPlugins.plenary-nvim
-          vimPlugins.nvim-treesitter-legacy.withAllGrammars
+          vimPlugins.nvim-treesitter.withAllGrammars
           vimPlugins.zen-mode-nvim
           vimPlugins.vimtex
+          vimPlugins.none-ls-nvim
+          (pkgs.vimUtils.buildVimPlugin {
+            pname = "none-ls-extras.nvim";
+            version = "0-unstable-2026-01-29";
+            src = fetchFromGitHub {
+              owner = "nvimtools";
+              repo = "none-ls-extras.nvim";
+              rev = "6ced4fc4072c7b269ba95bb596196cc76e00b280";
+              hash = "sha256-PdRzHkmw/EQ/A5H9p68ynOBpatHrRQzoF41cmJ2b49o=";
+            };
+            doCheck = false;
+          })
           vimPlugins.which-key-nvim
           vimPlugins.telescope-nvim
           vimPlugins.telescope-ui-select-nvim
