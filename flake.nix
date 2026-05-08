@@ -62,7 +62,7 @@
             '';
           };
 
-	  nvim = customNvim.packages.${system}.nvim;
+          nvim = customNvim.packages.${system}.nvim;
         }
       );
     };
