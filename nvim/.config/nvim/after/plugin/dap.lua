@@ -1,11 +1,8 @@
 local dap = require('dap')
-local ui = require('dap-view')
+local ui = require('dapui')
 require("dap-vscode-js").setup({
     adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
 })
-
-vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
-vim.fn.sign_define('DapBreakpoint', { text = '👉', texthl = '', linehl = '', numhl = '' })
 
 for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
     require("dap").configurations[language] = {
@@ -76,6 +73,7 @@ vim.keymap.set("n", "<space>dr", dap.restart)
 vim.keymap.set("n", "<space>dT", dapgo.debug_last_test)
 vim.keymap.set("n", "<space>dt", dapgo.debug_test)
 
+ui.setup()
 dap.listeners.before.attach.dapui_config = function()
     ui.open()
 end

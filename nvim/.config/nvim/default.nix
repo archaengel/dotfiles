@@ -28,7 +28,7 @@ let
   # which you want to pass to the config set of nixpkgs
   # import nixpkgs { config = extra_pkg_config; inherit system; }
   extra_pkg_config = {
-    # allowUnfree = true;
+    allowUnfree = true;
   };
   dependencyOverlays = # (import ./overlays inputs) ++
     [
@@ -156,7 +156,7 @@ let
 
         debug = with pkgs; [
           vimPlugins.nvim-dap
-          vimPlugins.nvim-dap-view
+          vimPlugins.nvim-dap-ui
           neovimPlugins.nvim-dap-vscode-js
           vimPlugins.nvim-dap-go
         ];
