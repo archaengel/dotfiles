@@ -7,6 +7,20 @@ local condition = require('galaxyline.condition')
 local gls = gl.section
 local cmd = vim.cmd
 
+---@param severity vim.diagnostic.Severity
+local function get_diagnostic(severity)
+    if vim.tbl_isempty(vim.lsp.get_clients({ bufnr = 0 })) then
+        return ''
+    end
+
+    local result = vim.diagnostic.get(0, { severity = severity });
+    if result and #result ~= 0 then
+        return #result .. ' '
+    end
+
+    return ''
+end
+
 cmd('highlight GalaxylineFillSection guibg=' .. colors.bg_statusline)
 
 gl.short_line_list = { 'NvimTree', 'vista', 'dbui' }
@@ -97,14 +111,18 @@ gls.left[7] = {
 
 gls.left[8] = {
     DiagnosticError = {
-        provider = 'DiagnosticError',
+        provider = function()
+            return get_diagnostic(vim.diagnostic.severity.ERROR)
+        end,
         icon = '  ',
         highlight = { colors.red, colors.bg_statusline }
     }
 }
 gls.left[9] = {
     DiagnosticWarn = {
-        provider = 'DiagnosticWarn',
+        provider = function()
+            return get_diagnostic(vim.diagnostic.severity.WARN)
+        end,
         icon = '  ',
         highlight = { colors.yellow, colors.bg_statusline }
     }
@@ -112,7 +130,9 @@ gls.left[9] = {
 
 gls.left[10] = {
     DiagnosticHint = {
-        provider = 'DiagnosticHint',
+        provider = function()
+            return get_diagnostic(vim.diagnostic.severity.HINT)
+        end,
         icon = '  ',
         highlight = { colors.cyan, colors.bg_statusline }
     }
@@ -120,7 +140,9 @@ gls.left[10] = {
 
 gls.left[11] = {
     DiagnosticInfo = {
-        provider = 'DiagnosticInfo',
+        provider = function()
+            return get_diagnostic(vim.diagnostic.severity.INFO)
+        end,
         icon = '  ',
         highlight = { colors.blue, colors.bg_statusline }
     }
@@ -128,7 +150,22 @@ gls.left[11] = {
 
 gls.mid[1] = {
     ShowLspClient = {
-        provider = 'GetLspClient',
+        provider = function()
+            local msg = 'No Active Lsp'
+            local clients = vim.lsp.get_clients {
+                bufnr = 0
+            }
+
+            if next(clients) == nil then
+                return msg
+            end
+
+            for _, client in ipairs(clients) do
+                return client.name
+            end
+
+            return msg
+        end,
         condition = function()
             local tbl = { ['dashboard'] = true, [''] = true }
             if tbl[vim.bo.filetype] then return false end
