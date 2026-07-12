@@ -66,6 +66,7 @@
           };
 
           nvim = customNvim.packages.${system}.nvim;
+          emacs = pkgs.callPackage ./emacs/.config/emacs { };
         }
       );
     };
