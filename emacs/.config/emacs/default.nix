@@ -8,6 +8,7 @@
   emacs-nox,
   symlinkJoin,
   makeWrapper,
+  initDir
 }:
 let
   binPath = lib.makeBinPath [
@@ -37,7 +38,8 @@ symlinkJoin {
   postBuild = ''
     ls $out/bin
     wrapProgram $out/bin/emacs \
-          --suffix PATH : "${binPath}"
+          --suffix PATH : "${binPath}" \
+          --append-flags "--init-directory \$(if [[ -n \"\$NOWRAP_EMACS\" ]]; then echo -n \"~/.config/emacs/\"; else echo \"${initDir}\"; fi)"
   '';
   inherit (emacsWrapped) meta;
 }

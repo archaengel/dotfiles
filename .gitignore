@@ -1,3 +1,6 @@
 .DS_Store
 packer_compiled.lua
 result
+
+emacs/.config/emacs/etc
+emacs/.config/emacs/var

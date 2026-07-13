@@ -1,12 +1,5 @@
 (require 'no-littering)
 (no-littering-theme-backups)
-;; Redirect native compilation cache
-(when (and (fboundp 'startup-redirect-eln-cache)
-           (fboundp 'native-comp-available-p)
-           (native-comp-available-p))
-  (startup-redirect-eln-cache
-   (convert-standard-filename
-    (expand-file-name  "var/eln-cache/" user-emacs-directory))))
 
 (setq evil-want-C-u-scroll t)
 (require 'evil)
@@ -18,7 +11,7 @@
   'normal
   'global
   (kbd "<leader>en")
-  (lambda() (interactive) (dired-at-point user-emacs-directory)))
+  (lambda() (interactive) (dired-at-point (file-name-parent-directory user-init-file))))
 (evil-define-key '(normal visual motion) 'global (kbd "<leader>wh") 'evil-window-left)
 (evil-define-key '(normal visual motion) 'global (kbd "<leader>wl") 'evil-window-right)
 (evil-define-key '(normal visual motion) 'global (kbd "<leader>wj") 'evil-window-down)
@@ -28,7 +21,7 @@
 (evil-define-key '(normal visual motion) 'global (kbd "<leader>SPC") 'find-file-at-point)
 
 (require 'nix-mode)
-(add-hook 'typescript-ts-mode-hook #'eglot-enure)
+(add-hook 'typescript-ts-mode-hook #'eglot-ensure)
 (add-hook 'nix-mode-hook #'eglot-ensure)
 
 (global-display-line-numbers-mode)
@@ -40,3 +33,4 @@
 
 (require 'doom-themes)
 (load-theme 'doom-one t)
+
