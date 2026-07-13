@@ -11,7 +11,8 @@
   'normal
   'global
   (kbd "<leader>en")
-  (lambda() (interactive) (dired-at-point (file-name-parent-directory user-init-file))))
+  ;; Hack to make configuring at runtime easier
+  (lambda() (interactive) (dired-at-point "~/.config/emacs/")))
 (evil-define-key '(normal visual motion) 'global (kbd "<leader>wh") 'evil-window-left)
 (evil-define-key '(normal visual motion) 'global (kbd "<leader>wl") 'evil-window-right)
 (evil-define-key '(normal visual motion) 'global (kbd "<leader>wj") 'evil-window-down)
