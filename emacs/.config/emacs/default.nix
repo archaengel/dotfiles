@@ -1,17 +1,19 @@
 {
+  emacs-nox,
+  emacsPackagesFor,
+  eslint_d,
+  initDir,
+  jdt-language-server,
   lib,
-  typescript-language-server,
+  makeWrapper,
   nixd,
   prettier,
-  eslint_d,
-  emacsPackagesFor,
-  emacs-nox,
   symlinkJoin,
-  makeWrapper,
-  initDir
+  typescript-language-server
 }:
 let
   binPath = lib.makeBinPath [
+    jdt-language-server
     typescript-language-server
     nixd
     prettier
