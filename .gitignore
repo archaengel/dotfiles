@@ -2,5 +2,7 @@
 packer_compiled.lua
 result
 
+.direnv
+
 emacs/.config/emacs/etc
 emacs/.config/emacs/var
