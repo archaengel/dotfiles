@@ -33,6 +33,8 @@
       (evil-window-vsplit)
        (ghostel)
       )))
+(evil-define-key '(normal visual motion) 'global (kbd "<leader>cc") 'compile)
+(evil-define-key '(normal visual motion) 'global (kbd "<leader>cC") 'recompile)
 (add-hook
  'eglot-connect-hook
  (progn
@@ -40,7 +42,7 @@
    (evil-define-key '(normal visual motion) 'global (kbd "<leader>rd") 'eglot-find-declaration)
    (evil-define-key '(normal visual motion) 'global (kbd "<leader>ri") 'eglot-find-implementation)
    (evil-define-key '(normal visual motion) 'global (kbd "<leader>rT") 'eglot-find-typeDeclaration)
-   ))
+    ))
 
 
 (ido-mode 1)
