@@ -1,5 +1,5 @@
 {
-  emacs-nox,
+  emacs,
   emacsPackagesFor,
   eslint_d,
   initDir,
@@ -9,7 +9,8 @@
   nixd,
   prettier,
   symlinkJoin,
-  typescript-language-server
+  typescript-language-server,
+  zls,
 }:
 let
   binPath = lib.makeBinPath [
@@ -18,8 +19,9 @@ let
     nixd
     prettier
     eslint_d
+    zls
   ];
-  emacsWrapped = (emacsPackagesFor emacs-nox).emacsWithPackages (
+  emacsWrapped = (emacsPackagesFor emacs).emacsWithPackages (
     epkgs: with epkgs; [
       ghostel
       tree-sitter
@@ -28,6 +30,10 @@ let
       nix-mode
       doom-themes
       no-littering
+      markdown-ts-mode
+      zig-ts-mode
+      uxntal-mode
+      exwm
     ]
   );
 in

@@ -33,14 +33,17 @@
       (evil-window-vsplit)
        (ghostel)
       )))
+(evil-define-key '(normal visual motion) 'global (kbd "<leader>cc") 'compile)
+(evil-define-key '(normal visual motion) 'global (kbd "<leader>cC") 'recompile)
 (add-hook
  'eglot-connect-hook
  (progn
+   (evil-define-key '(normal visual motion) 'global (kbd "<leader>gd") 'xref-find-definitions)
    (evil-define-key '(normal visual motion) 'global (kbd "<leader>rf") 'xref-find-references)
    (evil-define-key '(normal visual motion) 'global (kbd "<leader>rd") 'eglot-find-declaration)
    (evil-define-key '(normal visual motion) 'global (kbd "<leader>ri") 'eglot-find-implementation)
    (evil-define-key '(normal visual motion) 'global (kbd "<leader>rT") 'eglot-find-typeDeclaration)
-   ))
+    ))
 
 
 (ido-mode 1)
@@ -49,13 +52,19 @@
     'grep-find-command
     '("rg -n -H --no-heading -e '' $(git rev-parse --show-toplevel || pwd)" . 27)))
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(zig-ts-mode . ("zls"))))
 
 (require 'nix-mode)
+(add-hook 'zig-ts-mode-hook #'eglot-ensure)
 (add-hook 'typescript-ts-mode-hook #'eglot-ensure)
 (add-hook 'nix-mode-hook #'eglot-ensure)
+(add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
 
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
+(setq truncate-lines 1)
 (setq auto-save-default nil)
 (auto-save-mode -1)
 (menu-bar-mode 0)
