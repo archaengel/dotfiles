@@ -68,6 +68,8 @@
 (setq auto-save-default nil)
 (auto-save-mode -1)
 (menu-bar-mode 0)
+(tool-bar-mode -1)
+(setq inhibit-splash-screen 0)
 (setq make-backup-files nil)
 
 (require 'doom-themes)
