@@ -1,5 +1,5 @@
 {
-  emacs,
+  emacs-pgtk,
   emacsPackagesFor,
   eslint_d,
   initDir,
@@ -21,7 +21,7 @@ let
     eslint_d
     zls
   ];
-  emacsWrapped = (emacsPackagesFor emacs).emacsWithPackages (
+  emacsUnwrapped = (emacsPackagesFor emacs-pgtk).emacsWithPackages (
     epkgs: with epkgs; [
       ghostel
       tree-sitter
@@ -40,7 +40,7 @@ in
 symlinkJoin {
   name = "emacs-wrapped";
   paths = [
-    emacsWrapped
+    emacsUnwrapped
   ];
   buildInputs = [ makeWrapper ];
   postBuild = ''
@@ -49,5 +49,6 @@ symlinkJoin {
           --suffix PATH : "${binPath}" \
           --append-flags "--init-directory \$(if [[ -n \"\$NOWRAP_EMACS\" ]]; then echo -n \"~/.config/emacs/\"; else echo \"${initDir}\"; fi)"
   '';
-  inherit (emacsWrapped) meta;
+  passthru = { inherit (emacs-pgtk) pkgs; };
+  inherit (emacsUnwrapped) meta;
 }
